@@ -1,7 +1,13 @@
-export default function Home() {
-  return (
-    <section id="companies" className="mt-20">
-      <h1>xd</h1>
-    </section>
+import { CompaniesSection } from "@/components/Companies/components/CompaniesSection";
+import { externalApi } from "@/lib/axios";
+import { Company } from "../../types";
+
+export default async function Home() {
+  const companiesResponse = await externalApi.get<{ companies: Company[] }>(
+    "/companies"
   );
+
+  const { companies } = companiesResponse.data;
+
+  return <CompaniesSection initialCompanies={companies} />;
 }
