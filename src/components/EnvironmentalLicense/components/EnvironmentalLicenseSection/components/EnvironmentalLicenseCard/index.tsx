@@ -44,7 +44,7 @@ export function EnvironmentalLicenseCard({
 
   return (
     <Card>
-      <CardHeader className="flex items-center justify-between">
+      <CardHeader className="flex flex-col-reverse items-start lg:items-center lg:flex-row justify-between">
         <div className="flex flex-col gap-1">
           <CardTitle className="text-emerald-500">
             {environmentalLicense.licenseNumber}

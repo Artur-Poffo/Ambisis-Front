@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navigation/components/Navbar";
 import { Toaster } from "sonner";
+import { MobileMenu } from "@/components/Navigation/components/MobileMenu";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -25,8 +26,9 @@ export default function RootLayout({
         className={`${roboto.className} ${roboto.variable} font-roboto antialiased bg-gray-200 text-black`}
       >
         <Navbar />
+        <MobileMenu />
 
-        <main className="mt-24 px-10 pb-10">{children}</main>
+        <main className="mt-24 px-4 lg:px-10 pb-10">{children}</main>
 
         <Toaster />
       </body>

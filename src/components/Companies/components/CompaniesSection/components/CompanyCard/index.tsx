@@ -67,7 +67,7 @@ export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
 
   return (
     <Card>
-      <CardHeader className="flex items-center justify-between">
+      <CardHeader className="flex flex-col-reverse items-start lg:flex-row lg:items-center justify-between">
         <div className="flex flex-col gap-1">
           <CardTitle className="text-emerald-500">
             {company.companyName}
@@ -110,7 +110,7 @@ export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
         {isLoadingLicenses ? (
           <Skeleton className="w-full h-[40px]" />
         ) : (
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col lg:flex-row justify-between items-center">
             <div>
               {!licenses.length && (
                 <span className="text-emerald-500 font-bold">
