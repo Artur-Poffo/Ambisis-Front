@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { CreateOrUpdateCompanySheet } from "../CreateOrUpdateCompanySheet";
 import { toast } from "sonner";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CompanyCardProps {
   company: Company;
@@ -24,11 +25,14 @@ interface CompanyCardProps {
 export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
   const [licenses, setLicenses] = useState<EnvironmentalLicense[]>([]);
 
+  const [isLoadingLicenses, setIsLoadingLicenses] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     async function fetchCompanyLicenses() {
       try {
+        setIsLoadingLicenses(true);
+
         const licensesResponse = await externalApi.get<{
           environmentalLicenses: EnvironmentalLicense[];
         }>("/environmental-licenses", {
@@ -41,6 +45,8 @@ export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
         toast.error(
           "Erro ao buscar licenças da empresa, tente novamente mais tarde"
         );
+      } finally {
+        setIsLoadingLicenses(false);
       }
     }
 
@@ -101,35 +107,39 @@ export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
           {company.complement && <p>{company.complement}</p>}
         </div>
 
-        <div className="flex justify-between items-center">
-          <div>
-            {!licenses.length && (
-              <span className="text-emerald-500 font-bold">
-                Nenhuma licença vinculada ainda?
-              </span>
-            )}
+        {isLoadingLicenses ? (
+          <Skeleton className="w-full h-[40px]" />
+        ) : (
+          <div className="flex justify-between items-center">
+            <div>
+              {!licenses.length && (
+                <span className="text-emerald-500 font-bold">
+                  Nenhuma licença vinculada ainda?
+                </span>
+              )}
 
-            {licenses.length === 1 && (
-              <span className="text-emerald-500 font-bold">
-                {licenses[0].licenseNumber} vinculada à empresa
-              </span>
-            )}
+              {licenses.length === 1 && (
+                <span className="text-emerald-500 font-bold">
+                  {licenses[0].licenseNumber} vinculada à empresa
+                </span>
+              )}
 
-            {licenses.length > 1 && (
-              <span>
-                <strong className="text-emerald-500">
-                  {licenses[0].licenseNumber} e +{licenses.length - 1}{" "}
-                </strong>
-                {licenses.length - 1 === 1 ? "licença" : "licenças"} vinculadas
-                à empresa
-              </span>
-            )}
+              {licenses.length > 1 && (
+                <span>
+                  <strong className="text-emerald-500">
+                    {licenses[0].licenseNumber} e +{licenses.length - 1}{" "}
+                  </strong>
+                  {licenses.length - 1 === 1 ? "licença" : "licenças"}{" "}
+                  vinculadas à empresa
+                </span>
+              )}
+            </div>
+
+            <Link href={`/licenses?createLicenseAndAttachTo=${company.id}`}>
+              <Button variant="outline">Vincular licença</Button>
+            </Link>
           </div>
-
-          <Link href={`/licenses?createLicenseAndAttachTo=${company.id}`}>
-            <Button variant="outline">Vincular licença</Button>
-          </Link>
-        </div>
+        )}
       </CardContent>
     </Card>
   );
