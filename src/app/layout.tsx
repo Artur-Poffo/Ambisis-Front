@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navigation/components/Navbar";
+import { Toaster } from "sonner";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -26,6 +27,8 @@ export default function RootLayout({
         <Navbar />
 
         <main>{children}</main>
+
+        <Toaster />
       </body>
     </html>
   );

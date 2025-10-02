@@ -1,20 +1,24 @@
 # Ambisis - Seleção
 
-- [ ] Companies List
+- [ ] Lista de Empresas
 
-  - [x] Input for search
-  - [ ] Button to open sheet and create
-    - [ ] List of environmental licenses + button to create -> Redirects to the environmental licenses page with the sheet already open and company selected
-  - [x] List of cards
-    - [ ] Edit -> Reuse form component
-    - [x] Delete
+  - [x] Campo de busca
+  - [x] Botão para abrir o formulário e criar
+  - [x] Lista de cartões
+    - [x] Editar -> Reutilizar componente de formulário
+    - [x] Excluir
+    - [ ] Exibir infos básicas das licenças vinculadas
+    - [ ] CTA no card para criar nova licença
+      - [ ] Redireciona pra tela de licenças com o sheet aberto
 
-- [ ] Environmental Licenses List
+- [ ] Lista de Licenças Ambientais
 
-  - [ ] Input for search
-  - [ ] Button to open sheet to create
-  - [ ] List of cards
-    - [ ] Edit -> Reuse form component
-    - [ ] Delete
+  - [ ] Campo de busca
+  - [ ] Botão para abrir o formulário para criar
+    - [ ] Listagem com empresas existentes em um select
+  - [ ] Lista de cartões
+    - [ ] Editar -> Reutilizar componente de formulário
+    - [ ] Excluir
 
-- [ ] Documentation
+- [ ] Responsivo
+- [ ] Documentação

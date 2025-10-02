@@ -9,7 +9,7 @@ export interface Company {
   state: string;
   neighborhood: string;
   street: string;
-  complement: string | undefined;
+  complement?: string | undefined;
 }
 
 export interface EnvironmentalLicense {

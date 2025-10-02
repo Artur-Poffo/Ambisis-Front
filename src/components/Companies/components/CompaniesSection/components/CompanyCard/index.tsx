@@ -10,13 +10,16 @@ import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { externalApi } from "@/lib/axios";
 import { useState } from "react";
+import { CreateOrUpdateCompanySheet } from "../CreateOrUpdateCompanySheet";
 
 interface CompanyCardProps {
   company: Company;
+
+  onUpdate: (company: Company) => void;
   onDelete: (company: Company) => void;
 }
 
-export function CompanyCard({ company, onDelete }: CompanyCardProps) {
+export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   async function handleDeleteCompany() {
@@ -42,9 +45,14 @@ export function CompanyCard({ company, onDelete }: CompanyCardProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant={"outline"}>
-            <Pencil />
-          </Button>
+          <CreateOrUpdateCompanySheet
+            selectedCompany={company}
+            onUpdate={onUpdate}
+          >
+            <Button variant={"outline"}>
+              <Pencil />
+            </Button>
+          </CreateOrUpdateCompanySheet>
 
           <Button
             className="hover:text-red-500  hover:bg-red-300/20 transition-colors"

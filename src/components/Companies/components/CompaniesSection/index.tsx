@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { Company } from "../../../../../types";
 import { CompanyCard } from "./components/CompanyCard";
+import { CreateOrUpdateCompanySheet } from "./components/CreateOrUpdateCompanySheet";
 
 interface CompaniesSectionProps {
   initialCompanies: Company[];
@@ -26,7 +27,28 @@ export function CompaniesSection({ initialCompanies }: CompaniesSectionProps) {
     );
   }, [search, companies]);
 
-  function onDeleteCompany(company: Company) {
+  function onCompanyCreated(company: Company) {
+    setCompanies((prevCompanies) => [...prevCompanies, company]);
+  }
+
+  function onCompanyUpdated(company: Company) {
+    setCompanies((prevCompanies) => {
+      const companyToUpdateIndex = prevCompanies.findIndex(
+        (companyToUpdate) => companyToUpdate.id === company.id
+      );
+
+      if (companyToUpdateIndex === -1) {
+        return prevCompanies;
+      }
+
+      const updatedCompanies = [...prevCompanies];
+      updatedCompanies[companyToUpdateIndex] = company;
+
+      return updatedCompanies;
+    });
+  }
+
+  function onCompanyDeleted(company: Company) {
     setCompanies((prevCompanies) =>
       prevCompanies.filter(
         (companyToDelete) => companyToDelete.id !== company.id
@@ -46,7 +68,9 @@ export function CompaniesSection({ initialCompanies }: CompaniesSectionProps) {
             placeholder="Pesquise pelo nome das empresas..."
           />
 
-          <Button>Criar Empresa</Button>
+          <CreateOrUpdateCompanySheet onCreate={onCompanyCreated}>
+            <Button>Criar Empresa</Button>
+          </CreateOrUpdateCompanySheet>
         </div>
       </header>
 
@@ -60,7 +84,11 @@ export function CompaniesSection({ initialCompanies }: CompaniesSectionProps) {
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredCompanies.map((company) => (
           <li key={company.id}>
-            <CompanyCard company={company} onDelete={onDeleteCompany} />
+            <CompanyCard
+              company={company}
+              onUpdate={onCompanyUpdated}
+              onDelete={onCompanyDeleted}
+            />
           </li>
         ))}
       </ul>
