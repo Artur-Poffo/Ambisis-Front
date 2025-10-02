@@ -77,10 +77,7 @@ export function EnvironmentalLicensesSection({
   }
 
   return (
-    <section
-      id="environmental_licenses"
-      className="mt-24 flex flex-col gap-10 px-4"
-    >
+    <section id="environmental_licenses" className="flex flex-col gap-10">
       <header className="w-full flex flex-col gap-4">
         <h2 className="text-3xl font-bold">Licenças Ambientais</h2>
 

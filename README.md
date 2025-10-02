@@ -1,15 +1,15 @@
 # Ambisis - Seleção
 
-- [ ] Lista de Empresas
+- [x] Lista de Empresas
 
   - [x] Campo de busca
   - [x] Botão para abrir o formulário e criar
   - [x] Lista de cartões
     - [x] Editar -> Reutilizar componente de formulário
     - [x] Excluir
-    - [ ] Exibir infos básicas das licenças vinculadas
-    - [ ] CTA no card para criar nova licença
-      - [ ] Redireciona pra tela de licenças com o sheet aberto
+    - [x] Exibir infos básicas das licenças vinculadas
+    - [x] CTA no card para criar nova licença
+      - [x] Redireciona pra tela de licenças com o sheet aberto
 
 - [x] Lista de Licenças Ambientais -> EnvironmentalLicense
 

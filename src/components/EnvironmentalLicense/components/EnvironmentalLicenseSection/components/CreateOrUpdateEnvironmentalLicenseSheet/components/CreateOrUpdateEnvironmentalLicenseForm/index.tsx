@@ -190,7 +190,10 @@ export function CreateOrUpdateEnvironmentalLicenseForm({
                 <FormLabel>Empresa</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger
+                      disabled={!!selectedCompanyIdToCreateLicense}
+                      className="w-full"
+                    >
                       <SelectValue placeholder="Selecione uma empresa" />
                     </SelectTrigger>
 

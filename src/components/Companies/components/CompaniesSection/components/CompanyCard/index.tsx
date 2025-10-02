@@ -5,12 +5,14 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Company } from "../../../../../../../types";
+import { Company, EnvironmentalLicense } from "../../../../../../../types";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { externalApi } from "@/lib/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateOrUpdateCompanySheet } from "../CreateOrUpdateCompanySheet";
+import { toast } from "sonner";
+import Link from "next/link";
 
 interface CompanyCardProps {
   company: Company;
@@ -20,7 +22,30 @@ interface CompanyCardProps {
 }
 
 export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
+  const [licenses, setLicenses] = useState<EnvironmentalLicense[]>([]);
+
   const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    async function fetchCompanyLicenses() {
+      try {
+        const licensesResponse = await externalApi.get<{
+          environmentalLicenses: EnvironmentalLicense[];
+        }>("/environmental-licenses", {
+          params: {
+            companyId: company.id,
+          },
+        });
+        setLicenses(licensesResponse.data.environmentalLicenses);
+      } catch (error) {
+        toast.error(
+          "Erro ao buscar licenças da empresa, tente novamente mais tarde"
+        );
+      }
+    }
+
+    fetchCompanyLicenses();
+  }, [company.id]);
 
   async function handleDeleteCompany() {
     try {
@@ -65,14 +90,46 @@ export function CompanyCard({ company, onUpdate, onDelete }: CompanyCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent>
-        <p>
-          {company.street}, {company.neighborhood}
-        </p>
-        <p>
-          {company.city}, {company.state}, {company.zipCode}
-        </p>
-        {company.complement && <p>{company.complement}</p>}
+      <CardContent className="flex min-h-[180px] flex-col justify-between">
+        <div>
+          <p>
+            {company.street}, {company.neighborhood}
+          </p>
+          <p>
+            {company.city}, {company.state}, {company.zipCode}
+          </p>
+          {company.complement && <p>{company.complement}</p>}
+        </div>
+
+        <div className="flex justify-between items-center">
+          <div>
+            {!licenses.length && (
+              <span className="text-emerald-500 font-bold">
+                Nenhuma licença vinculada ainda?
+              </span>
+            )}
+
+            {licenses.length === 1 && (
+              <span className="text-emerald-500 font-bold">
+                {licenses[0].licenseNumber} vinculada à empresa
+              </span>
+            )}
+
+            {licenses.length > 1 && (
+              <span>
+                <strong className="text-emerald-500">
+                  {licenses[0].licenseNumber} e +{licenses.length - 1}{" "}
+                </strong>
+                {licenses.length - 1 === 1 ? "licença" : "licenças"} vinculadas
+                à empresa
+              </span>
+            )}
+          </div>
+
+          <Link href={`/licenses?createLicenseAndAttachTo=${company.id}`}>
+            <Button variant="outline">Vincular licença</Button>
+          </Link>
+        </div>
       </CardContent>
     </Card>
   );

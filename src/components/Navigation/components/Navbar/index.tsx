@@ -2,8 +2,10 @@ import Link from "next/link";
 
 export function Navbar() {
   return (
-    <nav className="px-14 py-4 border-b border-gray-300 fixed top-0 left-0 flex w-full items-center justify-between">
-      <h1 className="text-4xl font-bold text-emerald-500">Ambisis</h1>
+    <nav className="px-10 py-4 border-b border-gray-300 fixed top-0 left-0 flex w-full items-center justify-between">
+      <Link href={"/"}>
+        <h1 className="text-4xl font-bold text-emerald-500">Ambisis</h1>
+      </Link>
 
       <ul className="flex items-center gap-6">
         <li>

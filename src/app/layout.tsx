@@ -26,7 +26,7 @@ export default function RootLayout({
       >
         <Navbar />
 
-        <main>{children}</main>
+        <main className="mt-24 px-10 pb-10">{children}</main>
 
         <Toaster />
       </body>
